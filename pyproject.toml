@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "insta_embed"
+version = "0.1.0"
+description = "A little thing to get me some html"
+authors = ["Justin Barnowski <jbarno54@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+aiohttp = "^3.6.2"
+fire = "^0.3.1"
+python-facebook-api = {git = "https://github.com/sns-sdks/python-facebook.git"}
+jinja2 = "^2.11.2"
+babel = "^2.8.0"
+
+[tool.poetry.dev-dependencies]
+pytest-sugar = "^0.9.3"
+black = "^19.10b0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
