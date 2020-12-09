@@ -17,6 +17,7 @@ def _user_by_token(token, count=None):
     api = IgBasicApi(long_term_token=token)
     user = api.get_user_info()
     resp = api.get_user_medias(user_id=user.id, count=count)
+    print(resp)
     return sorted(resp, key=lambda post: post.timestamp, reverse=True)
 
 

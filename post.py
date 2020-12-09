@@ -4,6 +4,9 @@ from datetime import date
 from babel.dates import format_date
 from jinja2 import Template
 
+# FIXME
+import os
+
 class Post(object):
     post_template = Template("""---
 title: {{ title }}
@@ -35,6 +38,8 @@ toc: false
 
     def write_jekyll_post(self):
         filename = "/mnt/src/shirlywhirlmd/_posts/" + self.get_title() + '-' + self.get_title() + ".md"
+        if os.path.exists(filename):
+            filename = filename + self.data.id + ".md"
         with open(filename, 'w') as post:
             post.write(Post.post_template.render(title=self.get_title(),
                                             categories=self.get_categories(),
