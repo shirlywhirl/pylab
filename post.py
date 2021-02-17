@@ -37,7 +37,7 @@ toc: false
             return ["Medical School"]
 
     def write_jekyll_post(self):
-        filename = "/mnt/src/shirlywhirlmd/_posts/" + self.get_title() + '-' + self.get_title() + ".md"
+        filename = "/home/jbarno/Development/shirlywhirlmd/_posts/" + self.get_title() + '-' + self.get_title() + ".md"
         if os.path.exists(filename):
             filename = filename + self.data.id + ".md"
         with open(filename, 'w') as post:

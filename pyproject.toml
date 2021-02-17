@@ -8,7 +8,7 @@ authors = ["Justin Barnowski <jbarno54@gmail.com>"]
 python = "^3.6"
 aiohttp = "^3.6.2"
 fire = "^0.3.1"
-python-facebook-api = {git = "https://github.com/sns-sdks/python-facebook.git"}
+python-facebook-api = "^.7.2"
 jinja2 = "^2.11.2"
 babel = "^2.8.0"
 
