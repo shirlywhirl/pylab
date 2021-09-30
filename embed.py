@@ -5,8 +5,7 @@ import json
 import time
 
 from post import Post
-
-from pyfacebook import IgBasicApi
+from pyfacebook import IGBasicDisplayApi
 
 
 def _user_by_token(token, count=None):
@@ -14,7 +13,7 @@ def _user_by_token(token, count=None):
     Given a user long lived token, generate a list of
     all media posts sorted by newest first.
     """
-    api = IgBasicApi(long_term_token=token)
+    api = IGBasicDisplayApi(long_term_token=token)
     user = api.get_user_info()
     resp = api.get_user_medias(user_id=user.id, count=count)
     print(resp)
