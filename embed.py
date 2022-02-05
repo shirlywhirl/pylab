@@ -50,22 +50,5 @@ def skip_embed(token, count=None):
     loop = asyncio.get_event_loop()
     loop.run_until_complete(_render_templates(token, count))
 
-
-def get_all_html(token):
-    """
-    Given a long user token spit out all their posts as embedable html
-    """
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(_embed(token))
-
-
-def get_last_n_posts(token, n):
-    """
-    Given a long user token spit their latest posts as embedable html
-    """
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(_embed(token, count=n))
-
-
 if __name__ == "__main__":
     fire.Fire()
