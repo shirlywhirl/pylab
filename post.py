@@ -39,7 +39,7 @@ toc: false
     def write_jekyll_post(self):
         filename = "/home/jbarno/Development/shirlywhirlmd/_posts/" + self.get_title() + '-' + self.get_title() + ".md"
         if os.path.exists(filename):
-            filename = filename + self.data.id + ".md"
+            return
         with open(filename, 'w') as post:
             post.write(Post.post_template.render(title=self.get_title(),
                                             categories=self.get_categories(),
