@@ -52,14 +52,8 @@ async def _refresh_token(old_token):
         encrypted_secret = _encrypt(pKey, new_token)
 
 
-
-
-
-
-
-
 def refresh_token(token):
-    print("Attempting to refresh token at: {}".format(path))
+    # TODO: use an envVar for this
     loop = asyncio.get_event_loop()
     loop.run_until_complete(_refresh_token(token))
 
