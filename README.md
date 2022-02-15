@@ -1,3 +1,3 @@
 # pylab
 python scripts and such
-test
+type python in here

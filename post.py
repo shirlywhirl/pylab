@@ -7,6 +7,16 @@ from jinja2 import Template
 # FIXME
 import os
 
+
+#does this work?
+!usr/bin/env python
+import tika
+tika.initVM()
+from tika import parser
+# we need to find out how get images/posts into this thing below:
+#parsed = parser.from_file([the posts go here])
+
+
 class Post(object):
     post_template = Template("""---
 title: {{ title }}
@@ -51,8 +61,15 @@ toc: false
 
     def get_pretty_time(self):
         d = self.data.timestamp
+        
         return format_date(date(int(d[:4:]), int(d[5:7:]), int(d[8:10:])), format='full', locale='en')
 
     def get_title(self):
         # TODO: Make this smart and fix above
+        #not sure if this works so i commented it out.
+        #t = self.data.title 
+        post.write.split
+        return t
         return self.data.timestamp[:10:]
+        
+        #something needs to return/print pytesseract.image_to_string([the posts]) here?
