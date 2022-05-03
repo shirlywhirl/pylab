@@ -23,7 +23,7 @@ async def _get_insta_token(session, url, token):
 async def _get_github_pub_key(session, org):
     headers = {"accept": "application/vnd.github.v3+json",
                "Authorization: token": os.environ["PAT_FOR_PUB"]}
-    url = "https://api.github.com/org/{org}/actions/secrets/public-key".format(org = org)
+    url = "https://api.github.com/orgs/{org}/actions/secrets/public-key".format(org = org)
     async with session.get(url, headers=headers) as resp:
         return await (resp.json["key"], resp.json["key_id"])
 
