@@ -5,12 +5,13 @@ description = "A little thing to get me some html"
 authors = ["Justin Barnowski <jbarno54@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.9"
 aiohttp = "^3.6.2"
 fire = "^0.3.1"
 python-facebook-api = "^.7.2"
 jinja2 = "^2.11.2"
 babel = "^2.8.0"
+PyNaCl = "^1.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest-sugar = "^0.9.3"
