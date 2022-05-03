@@ -35,7 +35,7 @@ async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encry
     data = { "encrypted_value" : encrypted_secret,
              "key_id" : key_id }
     async with session.put(url, data, headers=headers) as resp:
-        # Should always return 201
+        # Should always return 204
         return await resp.text()
 
 async def _refresh_token(old_token):
@@ -46,11 +46,10 @@ async def _refresh_token(old_token):
         )
         new_token = json.loads(resp)["access_token"]
 
-        # TODO: Upload pub key, ensure shirlywhirl is a an org
         pKey, key_id  = await _get_github_pub_key(session, "shirlywhirl")
         encrypted_secret = _encrypt(pKey, new_token)
-        _put_github_repo_secret(session, "shirlywhirl", "shirlywhirlmd", key_id, "INSTA_TOKEN", encrypted_secret)
-
+        status = await _put_github_repo_secret(session, "shirlywhirl", "shirlywhirlmd", key_id, "INSTA_TOKEN", encrypted_secret)
+        print(status)
 
 def refresh_token():
     token = os.environ.get("SHIRLYWHIRLMD_INSTA_TOKEN")
