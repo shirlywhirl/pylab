@@ -28,7 +28,7 @@ async def _get_github_pub_key(session, org):
 
 async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encrypted_secret):
     headers = ("accept", "application/vnd.github.v3+json")
-    url = "https://api.github.com/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo secret_name = secret_name)
+    url = "https://api.github.com/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo, secret_name = secret_name)
     data = { "encrypted_value" : encrypted_secret,
              "key_id" : key_id }
     async with session.put(url, data, params=headers) as resp:
