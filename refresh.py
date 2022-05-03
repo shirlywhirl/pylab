@@ -29,12 +29,13 @@ async def _get_github_pub_key(session, org):
         return (data["key"], data["key_id"])
 
 async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encrypted_secret):
-    headers = {"accept": "application/vnd.github.v3+json",
-               "Authorization": "token " + os.environ["PAT_FOR_PUT"]}
+    headers = {"accept": "application/vnd.github.v3+json"}
+              # "Authorization": "token " + os.environ["PAT_FOR_PUT"]}
     url = "https://api.github.com/repos/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo, secret_name = secret_name)
     data = { "encrypted_value" : encrypted_secret,
              "key_id" : key_id }
-    async with session.put(url, data=data, headers=headers) as resp:
+    basic_auth = aiohttp.BasicAuth("jbarno", os.environ["PAT_FOR_PUT"])
+    async with session.put(url, data=data, headers=headers, proxy_auth=basic_auth) as resp:
         # Should always return 204
         return await resp.text()
 
