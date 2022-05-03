@@ -25,8 +25,8 @@ async def _get_github_pub_key(session, org):
                "Authorization": "token " + os.environ["PAT_FOR_PUB"]}
     url = "https://api.github.com/orgs/{org}/actions/secrets/public-key".format(org = org)
     async with session.get(url, headers=headers) as resp:
-        data = resp.json()
-        return await (data["key"], data["key_id"])
+        await data = resp.json()
+        return (data["key"], data["key_id"])
 
 async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encrypted_secret):
     headers = {"accept": "application/vnd.github.v3+json",
