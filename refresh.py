@@ -24,20 +24,16 @@ async def _get_github_pub_key(session, org):
     headers = {"accept": "application/vnd.github.v3+json"}
     url = "https://api.github.com/org/{org}/actions/secrets/public-key".format(org = org)
     async with session.get(url, params=params) as resp:
-        # Likely has the key id needed in the next step
-        return await resp.text()
+        return await (resp.json["key"], resp.json["key_id"])
 
-async def _put_github_secret(session, org, secret_name, encrypted_secret):
-    headers = {"accept": "application/vnd.github.v3+json"}
-    url = "https://api.github.com/orgs/{org}/actions/secrets/{secret_name}".format(org = org, secret_name = secret_name)
+async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encrypted_secret):
+    headers = ("accept", "application/vnd.github.v3+json")
+    url = "https://api.github.com/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo secret_name = secret_name)
     data = { "encrypted_value" : encrypted_secret,
-             "key_id" : TODO,
-             "visiblity" : "selected",
-             "selected_repository_ids": "shirlywhirl/shirlywhirlmd" }
-    async with session.put(url, params=params) as resp:
+             "key_id" : key_id }
+    async with session.put(url, data, params=headers) as resp:
         # Should always return 201
         return await resp.text()
-
 
 async def _refresh_token(old_token):
 
@@ -48,12 +44,13 @@ async def _refresh_token(old_token):
         new_token = json.loads(resp)["access_token"]
 
         # TODO: Upload pub key, ensure shirlywhirl is a an org
-        pKey = await _get_github_pub_key(session, "shirlywhirl")
+        pKey, key_id  = await _get_github_pub_key(session, "shirlywhirl")
         encrypted_secret = _encrypt(pKey, new_token)
+        _put_github_repo_secret(session, "shirlywhirl", "shirlywhirlmd", key_id, "INSTA_TOKEN", encrypted_secret)
 
 
-def refresh_token(token):
-    # TODO: use an envVar for this
+def refresh_token():
+    token = os.environ.get("SHIRLYWHIRLMD_INSTA_TOKEN")
     loop = asyncio.get_event_loop()
     loop.run_until_complete(_refresh_token(token))
 
