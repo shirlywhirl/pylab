@@ -34,7 +34,7 @@ async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encry
     url = "https://api.github.com/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo, secret_name = secret_name)
     data = { "encrypted_value" : encrypted_secret,
              "key_id" : key_id }
-    async with session.put(url, data, headers=headers) as resp:
+    async with session.put(url, data=data, headers=headers) as resp:
         # Should always return 204
         return await resp.text()
 
