@@ -28,10 +28,10 @@ async def _get_github_pub_key(session, org):
         data = await resp.json()
         return (data["key"], data["key_id"])
 
-async def _put_github_repo_secret(session, org, repo, key_id, secret_name, encrypted_secret):
+async def _put_github_repo_secret(session, owner, repo, key_id, secret_name, encrypted_secret):
     headers = {"accept": "application/vnd.github.v3+json",
                "Authorization": "token " + os.environ["PAT_FOR_PUT"]}
-    url = "https://api.github.com/repos/{org}/{repo}/actions/secrets/{secret_name}".format(org = org, repo = repo, secret_name = secret_name)
+    url = "https://api.github.com/repos/{owner}/{repo}/actions/secrets/{secret_name}".format(owner = owner, repo = repo, secret_name = secret_name)
     data = { "encrypted_value" : encrypted_secret,
              "key_id" : key_id }
     async with session.put(url, data=data, headers=headers) as resp:
@@ -48,7 +48,7 @@ async def _refresh_token(old_token):
 
         pKey, key_id  = await _get_github_pub_key(session, "shirlywhirl")
         encrypted_secret = _encrypt(pKey, new_token)
-        status = await _put_github_repo_secret(session, "shirlywhirl", "shirlywhirlmd", key_id, "INSTA_TOKEN", encrypted_secret)
+        status = await _put_github_repo_secret(session, "jbarno", "shirlywhirlmd", key_id, "INSTA_TOKEN", encrypted_secret)
         print(status)
 
 def refresh_token():
